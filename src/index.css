@@ -1,0 +1,382 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 30% 10%;         /* deep blue */
+    --foreground: 45 100% 85%;         /* gold/cream for text */
+    --card: 220 30% 18%;               /* slightly lighter blue */
+    --card-foreground: 45 100% 85%;
+    --primary: 45 100% 60%;            /* gold accent */
+    --primary-foreground: 220 30% 10%; 
+    --secondary: 220 30% 25%;          /* muted blue */
+    --secondary-foreground: 45 100% 85%;
+    --muted: 220 30% 15%;
+    --muted-foreground: 45 100% 70%;
+    --accent: 45 100% 60%;
+    --accent-foreground: 220 30% 10%;
+    --border: 220 30% 25%;
+    --input: 220 30% 25%;
+    --ring: 45 100% 60%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: url('/b4f88ccc253c40990b44d592f47a115c.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(20, 24, 40, 0.55); /* semi-transparent dark overlay */
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* Custom CSS Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(40px, 30px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-40px, -30px); }
+}
+
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes sparkle {
+  0% { opacity: 1; filter: blur(0px); }
+  50% { opacity: 1; filter: blur(2px); }
+  100% { opacity: 0; filter: blur(4px); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.animate-float1 {
+  animation: float1 8s ease-in-out infinite;
+}
+
+.animate-float2 {
+  animation: float2 10s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 1s linear infinite;
+}
+
+/* Glassmorphism utility class */
+.glass {
+  background: rgba(30, 34, 60, 0.35);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.12);
+}
+
+/* Override card, modal, and major container styles to use .glass */
+.card, .modal, .dashboard-card, .chat-container, .main-container {
+  @apply glass;
+  color: hsl(var(--foreground));
+}
+
+/* Optional: Make buttons and inputs slightly translucent for a modern look */
+button, input, select, textarea {
+  background: rgba(30, 34, 60, 0.65);
+  color: hsl(var(--foreground));
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+}
+
+.glass-strong {
+  background: rgba(30, 34, 60, 0.65);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border-radius: 24px;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18);
+}
+
+/* Snake border highlight animation for dashboard cards */
+.border-highlight-anim {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 1.5rem;
+  pointer-events: none;
+  z-index: 20;
+}
+.border-highlight-anim .snake {
+  position: absolute;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #facc15, #38bdf8, #a855f7);
+  border-radius: 2px;
+  box-shadow: 0 0 8px 2px #facc15cc;
+  animation: snake-border 2.5s linear infinite;
+}
+@keyframes snake-border {
+  0%   { top: 0; left: 0; right: auto; bottom: auto; width: 60px; height: 3px; transform: none; }
+  24%  { top: 0; left: auto; right: 0; bottom: auto; width: 3px; height: 60px; transform: none; }
+  25%  { top: 0; left: auto; right: 0; bottom: auto; width: 3px; height: 60px; transform: none; }
+  49%  { top: auto; left: auto; right: 0; bottom: 0; width: 60px; height: 3px; transform: none; }
+  50%  { top: auto; left: auto; right: 0; bottom: 0; width: 60px; height: 3px; transform: none; }
+  74%  { top: auto; left: 0; right: auto; bottom: 0; width: 3px; height: 60px; transform: none; }
+  75%  { top: auto; left: 0; right: auto; bottom: 0; width: 3px; height: 60px; transform: none; }
+  99%  { top: 0; left: 0; right: auto; bottom: auto; width: 60px; height: 3px; transform: none; }
+  100% { top: 0; left: 0; right: auto; bottom: auto; width: 60px; height: 3px; transform: none; }
+}
+
+.dashboard-walk-anim {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 8px #facc15);
+  animation: dashboard-walk-anim 2.5s linear infinite;
+}
+@keyframes dashboard-walk-anim {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -300; }
+}
+
+@keyframes glow-breath {
+  0%, 100% {
+    box-shadow: 0 0 24px 4px #a855f7cc, 0 0 48px 12px #38bdf888;
+  }
+  50% {
+    box-shadow: 0 0 40px 12px #a855f7ee, 0 0 80px 28px #38bdf8cc;
+  }
+}
+
+.glow-hover {
+  position: relative;
+  z-index: 1;
+}
+.glow-hover:hover, .glow-hover:focus {
+  animation: glow-breath 1.8s ease-in-out infinite;
+  z-index: 10;
+}
+
+.magical-fall > * {
+  animation: magical-fall-down 1s cubic-bezier(.7,1.7,.7,1) forwards;
+}
+@keyframes magical-fall-down {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(80px); }
+}
+
+.magical-vanish > * {
+  animation: magical-vanish-down 3s cubic-bezier(.7,1.7,.7,1) forwards;
+}
+@keyframes magical-vanish-down {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(120px); }
+}
+
+.magical-rise > * {
+  animation: magical-rise-up 1.2s cubic-bezier(.7,1.7,.7,1) forwards;
+}
+@keyframes magical-rise-up {
+  0% { opacity: 0; transform: translateY(120px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.7s cubic-bezier(.7,1.7,.7,1) both;
+}
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.7) translateY(40px); }
+  80% { opacity: 1; }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.animate-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: pre-line;
+  border-right: 2px solid #fff3;
+  animation: typewriter 2.5s steps(40) 0.2s 1 normal both, blink-caret 0.7s step-end infinite;
+}
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blink-caret {
+  0%, 100% { border-color: #fff3; }
+  50% { border-color: transparent; }
+}
+
+.animate-fadein {
+  animation: fadeIn 1.2s 1.2s both;
+}
+
+.pull-me-rope {
+  position: absolute;
+  top: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pull-me-rope .rope {
+  width: 6px;
+  height: 80px;
+  background: repeating-linear-gradient(135deg, #e9d8a6 0 4px, #bfa76a 4px 8px);
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+.pull-me-tag {
+  background: #fffbe8;
+  color: #3b217b;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 6px 18px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #0002;
+  transform: rotate(-12deg);
+  border: 2px solid #e9d8a6;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Magical Vanish Up - new effect for dashboard */
+.magical-vanish-up {
+  animation: magical-vanish-up 2s cubic-bezier(.7,1.7,.7,1) forwards;
+  filter: blur(2px) brightness(1.2) drop-shadow(0 0 32px #ffe600) drop-shadow(0 0 64px #a855f7);
+  will-change: transform, opacity, filter;
+}
+@keyframes magical-vanish-up {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0) brightness(1) drop-shadow(0 0 0 #ffe600);
+  }
+  40% {
+    opacity: 0.8;
+    transform: scale(1.05) translateY(-30px) rotate(-2deg);
+    filter: blur(2px) brightness(1.2) drop-shadow(0 0 32px #ffe600);
+  }
+  70% {
+    opacity: 0.5;
+    transform: scale(1.12) translateY(-120px) rotate(2deg);
+    filter: blur(4px) brightness(1.4) drop-shadow(0 0 64px #a855f7);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.18) translateY(-240px) rotate(-4deg);
+    filter: blur(8px) brightness(1.7) drop-shadow(0 0 128px #00e6d2);
+  }
+}
+
+@keyframes vanishTopToBottom {
+  0% {
+    opacity: 1;
+    clip-path: inset(0% 0% 0% 0%);
+  }
+  80% {
+    opacity: 1;
+    clip-path: inset(0% 0% 90% 0%);
+  }
+  100% {
+    opacity: 0;
+    clip-path: inset(0% 0% 100% 0%);
+  }
+}
+
+.magical-vanish-top-to-bottom {
+  animation: vanishTopToBottom 2s cubic-bezier(0.4,0,0.2,1) forwards;
+  will-change: opacity, clip-path;
+} 

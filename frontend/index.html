@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <div class="min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">Agenda Hub</h1>
+      
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4">Create New Meeting</h2>
+        <form id="meetingForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Title</label>
+            <input type="text" name="title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea name="description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Start Time</label>
+            <input type="datetime-local" name="startTime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">End Time</label>
+            <input type="datetime-local" name="endTime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Participants (comma separated emails)</label>
+            <input type="text" name="participants" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+          </div>
+          <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+            Create Meeting
+          </button>
+        </form>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold mb-4">Upcoming Meetings</h2>
+        <div id="meetingsList" class="space-y-4">
+          <!-- Meetings will be added here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple backend API implementation
+    const meetings = [];
+
+    // Form submission handler
+    document.getElementById('meetingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const meeting = {
+        id: Date.now().toString(),
+        title: formData.get('title'),
+        description: formData.get('description'),
+        startTime: formData.get('startTime'),
+        endTime: formData.get('endTime'),
+        participants: formData.get('participants').split(',').map(p => p.trim()),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      meetings.push(meeting);
+      updateMeetingsList();
+      e.target.reset();
+    });
+
+    // Update meetings list display
+    function updateMeetingsList() {
+      const meetingsList = document.getElementById('meetingsList');
+      meetingsList.innerHTML = meetings.map(meeting => `
+        <div class="border rounded-lg p-4 hover:bg-gray-50">
+          <h3 class="text-lg font-semibold">${meeting.title}</h3>
+          <p class="text-gray-600">${meeting.description}</p>
+          <div class="mt-2">
+            <span class="text-sm text-gray-500">
+              ${new Date(meeting.startTime).toLocaleString()} - ${new Date(meeting.endTime).toLocaleString()}
+            </span>
+          </div>
+          <div class="mt-2">
+            <span class="text-sm text-gray-500">Participants: ${meeting.participants.join(', ')}</span>
+          </div>
+          <button onclick="deleteMeeting('${meeting.id}')" class="mt-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm hover:bg-red-600">
+            Delete
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Delete meeting function
+    function deleteMeeting(id) {
+      meetings.splice(meetings.findIndex(m => m.id === id), 1);
+      updateMeetingsList();
+    }
+  </script>
+</body>
+</html>
